@@ -22,7 +22,7 @@ class AFBrushBoard: UIImageView {
     
     // 最大和最小半径
     let minRadius:CGFloat = 5
-    let maxRadius:CGFloat = 12
+    let maxRadius:CGFloat = 13
     
     // 设置调试
     let debug = false
@@ -96,10 +96,20 @@ class AFBrushBoard: UIImageView {
         let x2 = abs(tempPoint1.y-tempPoint2.y)
         let len = Int(sqrt(pow(x1, 2) + pow(x2,2))*10)
         
+        // 如果仅仅点击一下
+        if len == 0 {
+            let zeroPath = UIBezierPath(arcCenter: points[1], radius: 6, startAngle: 0, endAngle: CGFloat(M_PI)*2.0, clockwise: true)
+            zeroPath.fill()
+            UIColor.blackColor().setFill()
+            
+            image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return
+        }
+        
         // 如果距离过短，直接画线
         if len < 10 {
             let zeroPath = UIBezierPath()
-
             zeroPath.moveToPoint(tempPoint1)
             zeroPath.addLineToPoint(tempPoint2)
             
@@ -107,18 +117,16 @@ class AFBrushBoard: UIImageView {
             if currentRadius > maxRadius {currentRadius = maxRadius}
             if currentRadius < minRadius {currentRadius = minRadius}
             
-            
             // 画线
             zeroPath.lineWidth = currentRadius
             zeroPath.lineCapStyle = .Round
             zeroPath.lineJoinStyle = .Round
 
-
             UIColor(white: 0, alpha: (currentRadius-minRadius)/maxRadius*0.15+0.1).setStroke()
             zeroPath.stroke()
+            
             lastImage = UIGraphicsGetImageFromCurrentImageContext()
             image = UIGraphicsGetImageFromCurrentImageContext()
-            
             UIGraphicsEndImageContext()
             return
         }
@@ -133,12 +141,8 @@ class AFBrushBoard: UIImageView {
         // 贝赛尔曲线的计算
         var s:CGFloat = 0.0
         var t:[CGFloat] = [CGFloat]()
-        
-
-        
         let pc:CGFloat = 1/CGFloat(len)
 
-        
         for _ in 0...len+1 {t.append(s);s=s+pc}
         var newx:[CGFloat] = [CGFloat]()
         var newy:[CGFloat] = [CGFloat]()
@@ -210,7 +214,6 @@ class AFBrushBoard: UIImageView {
             lastPoint = newPoint
             
             bpath.addLineToPoint(newPoint)
-            
             
             // 计算当前点
             if addRadius > aimRadius {
