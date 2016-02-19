@@ -12,7 +12,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(AFKnifeView(frame:self.view.frame))
+        self.view.addSubview(AFBrushBoard(frame:self.view.frame))
         
+    }
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 }
