@@ -1,6 +1,5 @@
 # AFBrushBoardDemo
 
-## 功能概要
 - 根据手指滑动速度动态调整线条粗细和透明度
 - 对相邻线段进行贝塞尔方法进行绘制
 - 多阶贝塞尔曲线方法抽取
@@ -12,7 +11,28 @@
 
 ![](/章.PNG)
 
+## TODO
+
+- 3D Touch 版本
+- 触摸点的动态忽略算法
+- 撤销功能
+- 线宽设定更改到UI级别
+
+## Author
+
+Weibo: [@AfryMask][1]
+
+Github: [AfryMaks][2]
+
 ## Thanks
+
 感谢奉先帮忙做的Demo图片
-https://github.com/Guodadada
-http://weibo.com/u/1791223913?is_hot=1
+
+Weibo: [@__奉先][3]
+
+GitHub: [Guodadada][4]
+
+[1]: http://www.weibo.com/2233947233/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1
+[2]: https://github.com/AfryMask/
+[3]: http://weibo.com/u/1791223913?is_hot=1
+[4]: https://github.com/Guodadada
