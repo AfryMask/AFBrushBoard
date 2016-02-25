@@ -78,7 +78,6 @@ class AFBrushBoard: UIImageView {
      */
     func changeImage(){
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
-        UIGraphicsBeginImageContext(frame.size)
         lastImage!.drawInRect(self.bounds)
         
         // 贝赛尔曲线的起始点和末尾点
