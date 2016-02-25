@@ -77,6 +77,7 @@ class AFBrushBoard: UIImageView {
      画图
      */
     func changeImage(){
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
         UIGraphicsBeginImageContext(frame.size)
         lastImage!.drawInRect(self.bounds)
         
