@@ -24,15 +24,23 @@ Weibo: [@AfryMask][1]
 
 Github: [AfryMaks][2]
 
+
+
 ## Thanks
 
-感谢奉先帮忙做的Demo图片
+Objective-C版本
 
-Weibo: [@__奉先][3]
+- GitHub: [WG-Workspace][5]
 
-GitHub: [Guodadada][4]
+
+Demo图片制作
+
+- Weibo: [@__奉先][3]
+
+- GitHub: [Guodadada][4]
 
 [1]: http://www.weibo.com/2233947233/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1
 [2]: https://github.com/AfryMask/
 [3]: http://weibo.com/u/1791223913?is_hot=1
 [4]: https://github.com/Guodadada
+[5]: https://github.com/WG-Workspace/AFBrushBoard_OC
