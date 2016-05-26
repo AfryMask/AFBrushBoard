@@ -44,7 +44,7 @@ class AFBrushBoard: UIImageView {
         btn.setTitle("Clear ", forState: UIControlState.Normal)
         
 
-        btn.addTarget(self, action: "btnClick", forControlEvents: UIControlEvents.TouchUpInside)
+        btn.addTarget(self, action: #selector(AFBrushBoard.btnClick), forControlEvents: UIControlEvents.TouchUpInside)
         addSubview(btn)
         
         // 默认图片设定
