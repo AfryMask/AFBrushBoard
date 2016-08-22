@@ -9,6 +9,8 @@
 import UIKit
 let size = UIScreen.mainScreen().bounds.size
 
+let use3DTouch = true;
+
 class AFBrushBoard: UIImageView {
     // 存放点集的数组
     var points:[CGPoint] = [CGPoint]()
@@ -141,8 +143,13 @@ class AFBrushBoard: UIImageView {
         }
         
         // 目标半径
-//        let aimWidth:CGFloat = CGFloat(300)/CGFloat(len)*(maxWidth-minWidth)
-        let aimWidth:CGFloat = pointForces[0]*(maxWidth-minWidth)
+        var aimWidth:CGFloat;
+        
+        if use3DTouch {
+            aimWidth = pointForces[0]*(maxWidth-minWidth)
+        }else{
+            aimWidth = CGFloat(300)/CGFloat(len)*(maxWidth-minWidth)
+        }
         
         // 获取贝塞尔点集
         let curvePoints = AFBezierPath.curveFactorization(tempPoint1, toPoint: tempPoint2, controlPoints: [points[1]], count: len)
@@ -232,7 +239,9 @@ extension AFBrushBoard {
         let p = touch!.locationInView(self)
         
         points = [p,p,p]
-        pointForces = [touch!.force,touch!.force,touch!.force];
+        if use3DTouch {
+            pointForces = [touch!.force,touch!.force,touch!.force];
+        }
         currentWidth = 13
         changeImage()
     }
@@ -240,10 +249,15 @@ extension AFBrushBoard {
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first
         let p = touch!.locationInView(self)
-        print(touch?.force)
+        if use3DTouch {
+            print(touch?.force)
+        }
         
         points = [points[1],points[2],p]
-        pointForces = [pointForces[1],pointForces[2],touch!.force];
+        
+        if use3DTouch {
+            pointForces = [pointForces[1],pointForces[2],touch!.force];
+        }
         changeImage()
     }
     
