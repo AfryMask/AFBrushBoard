@@ -13,6 +13,8 @@ class AFBrushBoard: UIImageView {
     // 存放点集的数组
     var points:[CGPoint] = [CGPoint]()
     
+    var pointForces:[CGFloat] = [CGFloat]()
+    
     // 当前半径
     var currentWidth:CGFloat = 10
     
@@ -139,7 +141,8 @@ class AFBrushBoard: UIImageView {
         }
         
         // 目标半径
-        let aimWidth:CGFloat = CGFloat(300)/CGFloat(len)*(maxWidth-minWidth)
+//        let aimWidth:CGFloat = CGFloat(300)/CGFloat(len)*(maxWidth-minWidth)
+        let aimWidth:CGFloat = pointForces[0]*(maxWidth-minWidth)
         
         // 获取贝塞尔点集
         let curvePoints = AFBezierPath.curveFactorization(tempPoint1, toPoint: tempPoint2, controlPoints: [points[1]], count: len)
@@ -229,6 +232,7 @@ extension AFBrushBoard {
         let p = touch!.locationInView(self)
         
         points = [p,p,p]
+        pointForces = [touch!.force,touch!.force,touch!.force];
         currentWidth = 13
         changeImage()
     }
@@ -236,8 +240,10 @@ extension AFBrushBoard {
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first
         let p = touch!.locationInView(self)
+        print(touch?.force)
         
         points = [points[1],points[2],p]
+        pointForces = [pointForces[1],pointForces[2],touch!.force];
         changeImage()
     }
     
