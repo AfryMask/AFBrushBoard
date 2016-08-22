@@ -22,7 +22,7 @@
 
 Weibo: [@AfryMask][1]
 
-Github: [AfryMaks][2]
+Github: [AfryMask][2]
 
 
 
