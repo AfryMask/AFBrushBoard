@@ -7,7 +7,7 @@
 //
 
 import UIKit
-let size = UIScreen.mainScreen().bounds.size
+let size = UIScreen.main.bounds.size
 
 let use3DTouch = true;
 
@@ -36,19 +36,19 @@ class AFBrushBoard: UIImageView {
         
         // 控件基本设定
         super.init(frame: frame)
-        self.backgroundColor = UIColor.clearColor()
-        self.userInteractionEnabled = true
+        self.backgroundColor = UIColor.clear
+        self.isUserInteractionEnabled = true
         
         // 清除按钮设定12
-        let btn = UIButton(frame: CGRectMake(0, self.frame.size.height-50, self.frame.size.width, 50))
+        let btn = UIButton(frame: CGRect(x: 0, y: self.frame.size.height-50, width: self.frame.size.width, height: 50))
         btn.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
-        btn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        btn.setTitleColor(UIColor.black, for: .normal)
         btn.titleLabel!.font = UIFont(name: "Zapfino", size: 18)
-        btn.titleEdgeInsets = UIEdgeInsetsMake(20, 0, 0, 0)
-        btn.setTitle("Clear ", forState: UIControlState.Normal)
+        btn.titleEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        btn.setTitle("Clear ", for: .normal)
         
 
-        btn.addTarget(self, action: #selector(AFBrushBoard.btnClick), forControlEvents: UIControlEvents.TouchUpInside)
+        btn.addTarget(self, action: #selector(AFBrushBoard.btnClick), for: UIControl.Event.touchUpInside)
         addSubview(btn)
         
         // 默认图片设定
@@ -57,7 +57,7 @@ class AFBrushBoard: UIImageView {
         lastImage = image
         
         if DEBUG{
-            points = [CGPointMake(100, 100),CGPointMake(200, 100),CGPointMake(200, 200)]
+            points = [CGPoint(x:100, y:100),CGPoint(x:200, y:100),CGPoint(x:200, y:200)]
             currentWidth = 10
             changeImage()
         }
@@ -71,7 +71,7 @@ class AFBrushBoard: UIImageView {
     /**
      图片恢复初始化
      */
-    func btnClick() {
+    @objc func btnClick() {
         image = defaultImage
         lastImage = defaultImage
         currentWidth = 13
@@ -82,23 +82,23 @@ class AFBrushBoard: UIImageView {
      */
     func changeImage(){
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
-        lastImage!.drawInRect(self.bounds)
+        lastImage!.draw(in: self.bounds)
         
         // 贝赛尔曲线的起始点和末尾点
-        let tempPoint1 = CGPointMake((points[0].x+points[1].x)/2, (points[0].y+points[1].y)/2)
-        let tempPoint2 = CGPointMake((points[1].x+points[2].x)/2, (points[1].y+points[2].y)/2)
+        let tempPoint1 = CGPoint(x:(points[0].x+points[1].x)/2, y:(points[0].y+points[1].y)/2)
+        let tempPoint2 = CGPoint(x:(points[1].x+points[2].x)/2, y:(points[1].y+points[2].y)/2)
         
         if DEBUG{
-            var pointPath = UIBezierPath(arcCenter: points[2], radius: 3, startAngle: 0, endAngle: CGFloat(M_PI)*2.0, clockwise: true)
-            UIColor.redColor().set()
+            var pointPath = UIBezierPath(arcCenter: points[2], radius: 3, startAngle: 0, endAngle: CGFloat(Double.pi)*2.0, clockwise: true)
+            UIColor.red.set()
             pointPath.stroke()
-            pointPath = UIBezierPath(arcCenter: points[1], radius: 3, startAngle: 0, endAngle: CGFloat(M_PI)*2.0, clockwise: true)
+            pointPath = UIBezierPath(arcCenter: points[1], radius: 3, startAngle: 0, endAngle: CGFloat(Double.pi)*2.0, clockwise: true)
             pointPath.stroke()
-            pointPath = UIBezierPath(arcCenter: points[0], radius: 3, startAngle: 0, endAngle: CGFloat(M_PI)*2.0, clockwise: true)
+            pointPath = UIBezierPath(arcCenter: points[0], radius: 3, startAngle: 0, endAngle: CGFloat(Double.pi)*2.0, clockwise: true)
             pointPath.stroke()
-            pointPath = UIBezierPath(arcCenter: tempPoint1, radius: 3, startAngle: 0, endAngle: CGFloat(M_PI)*2.0, clockwise: true)
+            pointPath = UIBezierPath(arcCenter: tempPoint1, radius: 3, startAngle: 0, endAngle: CGFloat(Double.pi)*2.0, clockwise: true)
             pointPath.stroke()
-            pointPath = UIBezierPath(arcCenter: tempPoint2, radius: 3, startAngle: 0, endAngle: CGFloat(M_PI)*2.0, clockwise: true)
+            pointPath = UIBezierPath(arcCenter: tempPoint2, radius: 3, startAngle: 0, endAngle: CGFloat(Double.pi)*2.0, clockwise: true)
             pointPath.stroke()
         }
         
@@ -109,8 +109,8 @@ class AFBrushBoard: UIImageView {
         
         // 如果仅仅点击一下
         if len == 0 {
-            let zeroPath = UIBezierPath(arcCenter: points[1], radius: maxWidth/2-2, startAngle: 0, endAngle: CGFloat(M_PI)*2.0, clockwise: true)
-            UIColor.blackColor().setFill()
+            let zeroPath = UIBezierPath(arcCenter: points[1], radius: maxWidth/2-2, startAngle: 0, endAngle: CGFloat(Double.pi)*2.0, clockwise: true)
+            UIColor.black.setFill()
             zeroPath.fill()
             
             // 绘图
@@ -123,8 +123,8 @@ class AFBrushBoard: UIImageView {
         // 如果距离过短，直接画线
         if len < 1 {
             let zeroPath = UIBezierPath()
-            zeroPath.moveToPoint(tempPoint1)
-            zeroPath.addLineToPoint(tempPoint2)
+            zeroPath.move(to: tempPoint1)
+            zeroPath.addLine(to: tempPoint2)
             
             currentWidth += 0.05
             if currentWidth > maxWidth {currentWidth = maxWidth}
@@ -132,8 +132,8 @@ class AFBrushBoard: UIImageView {
             
             // 画线
             zeroPath.lineWidth = currentWidth
-            zeroPath.lineCapStyle = .Round
-            zeroPath.lineJoinStyle = .Round
+            zeroPath.lineCapStyle = .round
+            zeroPath.lineJoinStyle = .round
             UIColor(white: 0, alpha: (currentWidth-minWidth)/maxWidth*0.6+0.2).setStroke()
             zeroPath.stroke()
             
@@ -152,22 +152,21 @@ class AFBrushBoard: UIImageView {
         }
         
         // 获取贝塞尔点集
-        let curvePoints = AFBezierPath.curveFactorization(tempPoint1, toPoint: tempPoint2, controlPoints: [points[1]], count: len)
+        let curvePoints = AFBezierPath.curveFactorization(fromPoint: tempPoint1, toPoint: tempPoint2, controlPoints: [points[1]], count: len)
         
         // 画每条线段
         var lastPoint:CGPoint = tempPoint1
-        for(var i=0;i<len+1;i++)
-        {
+        for i in 0..<len+1 {
             let bPath = UIBezierPath()
-            bPath.moveToPoint(lastPoint)
+            bPath.move(to: lastPoint)
             
             // 省略多余的点
             let delta = sqrt(pow(curvePoints[i].x-lastPoint.x, 2) + pow(curvePoints[i].y-lastPoint.y, 2))
             if delta < 1 {continue}
             
-            lastPoint = CGPointMake(curvePoints[i].x, curvePoints[i].y)
+            lastPoint = CGPoint(x: curvePoints[i].x, y: curvePoints[i].y)
             
-            bPath.addLineToPoint(CGPointMake(curvePoints[i].x, curvePoints[i].y))
+            bPath.addLine(to: CGPoint(x: curvePoints[i].x, y: curvePoints[i].y))
             
             // 计算当前点
             if currentWidth > aimWidth {
@@ -180,8 +179,8 @@ class AFBrushBoard: UIImageView {
             
             // 画线
             bPath.lineWidth = currentWidth
-            bPath.lineCapStyle = .Round
-            bPath.lineJoinStyle = .Round
+            bPath.lineCapStyle = .round
+            bPath.lineJoinStyle = .round
             UIColor(white: 0, alpha: (currentWidth-minWidth)/maxWidth*0.3+0.1).setStroke()
             bPath.stroke()
 
@@ -197,15 +196,14 @@ class AFBrushBoard: UIImageView {
         var addRadius = currentWidth
         
         // 尾部线段
-        for(var i=0;i<pointCount;i++)
-        {
+        for _ in 0..<pointCount {
             let bpath = UIBezierPath()
-            bpath.moveToPoint(lastPoint)
+            bpath.move(to: lastPoint)
             
-            let newPoint = CGPointMake(lastPoint.x-delX, lastPoint.y-delY)
+            let newPoint = CGPoint(x: lastPoint.x-delX, y: lastPoint.y-delY)
             lastPoint = newPoint
             
-            bpath.addLineToPoint(newPoint)
+            bpath.addLine(to: newPoint)
             
             // 计算当前点
             if addRadius > aimWidth {
@@ -218,8 +216,8 @@ class AFBrushBoard: UIImageView {
             
             // 画线
             bpath.lineWidth = addRadius
-            bpath.lineCapStyle = .Round
-            bpath.lineJoinStyle = .Round
+            bpath.lineCapStyle = .round
+            bpath.lineJoinStyle = .round
             UIColor(white: 0, alpha: (currentWidth-minWidth)/maxWidth*0.05+0.05).setStroke()
             bpath.stroke()
             
@@ -234,9 +232,9 @@ class AFBrushBoard: UIImageView {
 // 触摸事件
 extension AFBrushBoard {
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        let p = touch!.locationInView(self)
+        let p = touch!.location(in: self)
         
         points = [p,p,p]
         if use3DTouch {
@@ -246,9 +244,9 @@ extension AFBrushBoard {
         changeImage()
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        let p = touch!.locationInView(self)
+        let p = touch!.location(in: self)
         if use3DTouch {
             print(touch?.force)
         }
@@ -261,7 +259,7 @@ extension AFBrushBoard {
         changeImage()
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         lastImage = image
     }
@@ -281,8 +279,8 @@ class AFBezierPath {
      count:分解数量
      返回:分解的点集
      */
-    class func curveFactorization(fromPoint:CGPoint, toPoint: CGPoint, controlPoints:[CGPoint], var count:Int) -> [CGPoint]{
-        
+    class func curveFactorization(fromPoint:CGPoint, toPoint: CGPoint, controlPoints:[CGPoint], count:Int) -> [CGPoint]{
+        var count = count
         //如果分解数量为0，生成默认分解数量
         if count == 0 {
             let x1 = abs(fromPoint.x-toPoint.x)
@@ -303,21 +301,21 @@ class AFBezierPath {
         
         for i in 0...count+1 {
             
-            var resultX = fromPoint.x * bezMaker(power, k:0, t:t[i])
-                + toPoint.x * bezMaker(power, k:power, t:t[i])
+            var resultX = fromPoint.x * bezMaker(n: power, k:0, t:t[i])
+                + toPoint.x * bezMaker(n: power, k:power, t:t[i])
                 
             for j in 1...power-1 {
-                resultX += controlPoints[j-1].x * bezMaker(power, k:j, t:t[i])
+                resultX += controlPoints[j-1].x * bezMaker(n: power, k:j, t:t[i])
             }
             
-            var resultY = fromPoint.y * bezMaker(power, k:0, t:t[i])
-                + toPoint.y * bezMaker(power, k:power, t:t[i])
+            var resultY = fromPoint.y * bezMaker(n: power, k:0, t:t[i])
+                + toPoint.y * bezMaker(n: power, k:power, t:t[i])
             
             for j in 1...power-1 {
-                resultY += controlPoints[j-1].y * bezMaker(power, k:j, t:t[i])
+                resultY += controlPoints[j-1].y * bezMaker(n: power, k:j, t:t[i])
             }
             
-            newPoint.append(CGPointMake(resultX, resultY))
+            newPoint.append(CGPoint(x: resultX, y: resultY))
             
         }
         
@@ -330,8 +328,17 @@ class AFBezierPath {
         
         if k == 0 {return 1}
         
-        for(var i=n;i>=n-k+1;i--) {s1=s1*i}
-        for(var i=k;i>=2;i--) {s2=s2*i}
+        var i = n
+        while i >= n - k + 1 {
+            s1 = s1*i
+            i -= 1
+        }
+        
+        i = k
+        while i >= 2 {
+            s2 = s2*i
+            i -= 1
+        }
         
         return CGFloat(s1/s2)
     }
@@ -342,7 +349,7 @@ class AFBezierPath {
     }
     
     private class func bezMaker(n:Int, k:Int, t:CGFloat) -> CGFloat{
-        return comp(n, k: k) * realPow(1-t, k: n-k) * realPow(t, k: k)
+        return comp(n: n, k: k) * realPow(n: 1-t, k: n-k) * realPow(n: t, k: k)
     }
 }
 
