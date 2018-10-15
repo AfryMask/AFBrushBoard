@@ -24,7 +24,9 @@ Weibo: [@AfryMask][1]
 
 Github: [AfryMask][2]
 
+## Update
 
+twitter: [@askari01][6]
 
 ## Thanks
 
@@ -44,3 +46,4 @@ Demo图片制作
 [3]: http://weibo.com/u/1791223913?is_hot=1
 [4]: https://github.com/Guodadada
 [5]: https://github.com/WG-Workspace/AFBrushBoard_OC
+[6]: https://twitter.com/askari01
